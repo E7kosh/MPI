@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Чтение PDF файла</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            width: 100%;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .pdf-container {
+            width: 80%;
+            max-width: 800px;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            border: 1px solid #ccc;
+            width: 100%;
+            height: auto;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            width: 80%;
+            max-width: 800px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        input[type="file"] {
+            padding: 10px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <h1>Чтение PDF файла</h1>
+    </header>
+
+    <main>
+        <div class="pdf-container">
+            <canvas id="pdf-canvas"></canvas>
+        </div>
+
+        <div class="controls">
+            <button id="prev-page">Предыдущая страница</button>
+            <button id="next-page">Следующая страница</button>
+            <input type="file" id="file-input" accept="application/pdf">
+        </div>
+    </main>
+
+    <footer>
+        <p>Сайт для чтения PDF файлов. © 2024</p>
+    </footer>
+
+    <script>
+        let currentPage = 1;
+        let pdfDoc = null;
+        let canvas = document.getElementById('pdf-canvas');
+        let ctx = canvas.getContext('2d');
+
+        // Функция для отображения страницы PDF
+        function renderPage(pageNum) {
+            pdfDoc.getPage(pageNum).then(function(page) {
+                let viewport = page.getViewport({ scale: 1.5 });
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+
+                page.render({
+                    canvasContext: ctx,
+                    viewport: viewport
+                });
+            });
+        }
+
+        // Функция для загрузки и отображения PDF
+        function loadPDF(file) {
+            const fileReader = new FileReader();
+            fileReader.onload = function() {
+                const typedArray = new Uint8Array(this.result);
+                pdfjsLib.getDocument(typedArray).promise.then(function(pdf) {
+                    pdfDoc = pdf;
+                    renderPage(currentPage);
+                });
+            };
+            fileReader.readAsArrayBuffer(file);
+        }
+
+        // Обработчик загрузки PDF
+        document.getElementById('file-input').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                loadPDF(file);
+            }
+        });
+
+        // Переключение на предыдущую страницу
+        document.getElementById('prev-page').addEventListener('click', function() {
+            if (currentPage > 1) {
+                currentPage--;
+                renderPage(currentPage);
+            }
+        });
+
+        // Переключение на следующую страницу
+        document.getElementById('next-page').addEventListener('click', function() {
+            if (pdfDoc && currentPage < pdfDoc.numPages) {
+                currentPage++;
+                renderPage(currentPage);
+            }
+        });
+    </script>
+</body>
+</html>

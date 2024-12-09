@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Курс по программированию на Python</title>
+    <link rel="stylesheet" href="Untitled-2.css">
+</head>
+<body>
+    <body>
+        <header>
+            <div class="logo">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTlrdx-Zjj5GKujkrlk87DANXZ1A2QGqiP1mQ&s" alt="Логотип">
+            </div>
+            <h1>MPI ТЕХНОЛОГИЯСЫН ҚОЛДАНА ОТЫРЫП ПАРАЛЛЕЛЬДІ БАҒДАРЛАМАЛАУ ПРАКТИКУМЫ"</h1>
+            
+        </header>
+    
+        <nav class="menu">
+            <ul>
+            <li><a href="титульный.html">Басты бет </a></li>
+            <li><a href="index.html">Есептің қойылымы</a></li>
+            <li><a href="модульдер.html">Модульдер</a></li>
+            <li><a href="тапсырма.html">Жобалық тапсырмалар </a></li>
+            
+            </ul>
+        </nav>
+    
+        <main>
+           
+            <img src="https://www.hpcwire.com/wp-content/uploads/2017/05/MPIlogo2.gif" alt="" class="main-image">
+            
+            <button class="cta-button" onclick="toggleContent()">Мазмұны</button>
+    
+            <!-- Скрытый текст, который показывается при нажатии на кнопку -->
+            <div class="hidden-content" id="course-details">
+                
+                <ul style="list-style-type: none;">
+                    <li>Модуль № 1— параллельді бағдарламаларды әзірлеу және орындау процесін сипаттауға арналған;</li>
+                    <li>Модуль № 2 — екі процесс арасындағы хабарламаларды жіберу;</li>
+                    <li>Модуле № 3 — редукция операциялары және параллель бағдарламаларда құрама деректер түрлерін қолдану ерекшеліктері қарастырылады;</li>
+                    <li>Модуль № 4 — ұжымдық операцияларға және жаңа коммуникаторларды құру тәсілдеріне арналған;</li>
+                    <li>Модуль № 5 — виртуалды топологиялар.</li>
+            
+                </ul>
+                
+            </div>
+        </main>
+    
+        
+    
+        <script>
+            // Функция для переключения видимости текста
+            function toggleContent() {
+                var content = document.getElementById('course-details');
+                // Переключаем отображение скрытого контента
+                if (content.style.display === "none" || content.style.display === "") {
+                    content.style.display = "block";
+                } else {
+                    content.style.display = "none";
+                }
+            }
+        </script>
+    </body>
+</html>
